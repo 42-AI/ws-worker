@@ -16,7 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/jjauzion/ws-worker/client"
+	"github.com/42-AI/ws-worker/client"
 	"github.com/spf13/cobra"
 )
 

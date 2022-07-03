@@ -1,7 +1,7 @@
 package conf
 
 import (
-	"github.com/jjauzion/ws-worker/internal/logger"
+	"github.com/42-AI/ws-worker/internal/logger"
 	"github.com/spf13/viper"
 	"time"
 )

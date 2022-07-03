@@ -7,8 +7,8 @@ It consists of a task queue where user can create new jobs and one or more worke
 The jobs are submitted via a Docker image that shall be available on a public container registry.
 
 The project is made of three repositories:
-- the worker node: https://github.com/jjauzion/ws-worker
-- the backend server: https://github.com/jjauzion/ws-backend
+- the worker node: https://github.com/42-AI/ws-worker
+- the backend server: https://github.com/42-AI/ws-backend
 - the frontend: *not yet implemented*
 
 # How to run
@@ -25,7 +25,7 @@ This tutorial will guide you through running the whole project.
 ## Start the backend
 Here we will run the entire project on your local machine from scratch, including the database.
  The database will be boostrapped with default users.
-- Clone the backend repository: `git clone https://github.com/jjauzion/ws-backend`
+- Clone the backend repository: `git clone https://github.com/42-AI/ws-backend`
 - Open the repo: `cd ws-backend`
 - Create the `.env` file in the project root folder.
   For a dev environment running in localhost, use this:
@@ -91,7 +91,7 @@ We will login with the admin user using the GraphQL API.
 - copy / paste the following request to log in as the admin user:
 ```graphql
 query login {
-  login (id: "admin-user@email.com", pwd: "") {
+  login (id: "admin-user@email.com", pwd: "password") {
     ... on Token {
       token
       userId
@@ -126,13 +126,15 @@ We will now see how to create user and task with the GraphQL API.
 - To create a new user, paste the following in the console:
 ```graphql
 mutation tuto_create_user {
-  create_user(input:{email:"just-for-test@email.com"}) {
-    id
-    email
-  }
+    create_user(input:{email:"test@gmail.com", password:"test"}) {
+        id
+        admin
+        email
+        created_at
+    }
 }
 ```
-- if you send the request like this you will get a `403` error because you are not authenticated
+- if you send the request like this you will get a `401` error because you are not authenticated
 - you need to pass the token we generated in the chapter before: on the bottom of the console, 
   click on `HTTP HEADERS` and paste the following (replace the token value with yours):
 ```json
@@ -152,10 +154,10 @@ mutation tuto_create_user {
 }
 ```
 ## Create a task
-- now let's create a task. Run the following command (replace the user id with yours):
+- now let's create a task. Run the following command :
 ```graphql
 mutation createTask {
-  create_task(input:{docker_image:"jjauzion/ws-mock-container", dataset:"s3//"}) {
+  create_task(input:{docker_image:"42-AI/ws-mock-container", dataset:"s3//"}) {
     id
     user_id
   	created_at
@@ -166,7 +168,7 @@ mutation createTask {
   }
 }
 ```
-- if you got a `403` error, check you didn't forget the `auth` Header in your request (see previous chapter)
+- if you got a `401` error, check you didn't forget the `auth` Header in your request (see previous chapter)
 
 Congratulations !! You have created a user and a new jobs :) You can go to the kibana console and run 
 the search to see your creations.
@@ -177,7 +179,7 @@ But before starting a worker node, we need to start the gRPC server:
 - Go in the `ws-backend` repository and run: `make grpc`  
 
 Now let's run the worker:  
-- Clone the worker repository: `git clone https://github.com/jjauzion/ws-worker.git`
+- Clone the worker repository: `git clone https://github.com/42-AI/ws-worker.git`
 - go in the `ws-worker` repo: `cd ws-worker`  
 - Create a `.env` file at the project root. 
   For a dev environment running in localhost with the following values:

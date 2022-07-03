@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/jjauzion/ws-worker/conf"
-	"github.com/jjauzion/ws-worker/internal/logger"
+	"github.com/42-AI/ws-worker/conf"
+	"github.com/42-AI/ws-worker/internal/logger"
 	"go.uber.org/zap"
 	"log"
 )

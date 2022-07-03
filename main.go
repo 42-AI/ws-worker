@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/jjauzion/ws-worker/cmd"
+import "github.com/42-AI/ws-worker/cmd"
 
 func main() {
 	cmd.Execute()

@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/credentials"
 	"time"
 
-	pb "github.com/jjauzion/ws-worker/proto"
+	pb "github.com/42-AI/ws-worker/proto"
 )
 
 func Run() {
