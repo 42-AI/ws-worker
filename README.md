@@ -91,7 +91,7 @@ We will login with the admin user using the GraphQL API.
 - copy / paste the following request to log in as the admin user:
 ```graphql
 query login {
-  login (id: "admin-user@email.com", pwd: "") {
+  login (id: "admin-user@email.com", pwd: "password") {
     ... on Token {
       token
       userId
@@ -126,13 +126,15 @@ We will now see how to create user and task with the GraphQL API.
 - To create a new user, paste the following in the console:
 ```graphql
 mutation tuto_create_user {
-  create_user(input:{email:"just-for-test@email.com"}) {
-    id
-    email
-  }
+    create_user(input:{email:"test@gmail.com", password:"test"}) {
+        id
+        admin
+        email
+        created_at
+    }
 }
 ```
-- if you send the request like this you will get a `403` error because you are not authenticated
+- if you send the request like this you will get a `401` error because you are not authenticated
 - you need to pass the token we generated in the chapter before: on the bottom of the console, 
   click on `HTTP HEADERS` and paste the following (replace the token value with yours):
 ```json
@@ -152,10 +154,10 @@ mutation tuto_create_user {
 }
 ```
 ## Create a task
-- now let's create a task. Run the following command (replace the user id with yours):
+- now let's create a task. Run the following command :
 ```graphql
 mutation createTask {
-  create_task(input:{docker_image:"jjauzion/ws-mock-container", dataset:"s3//"}) {
+  create_task(input:{docker_image:"42-AI/ws-mock-container", dataset:"s3//"}) {
     id
     user_id
   	created_at
@@ -166,7 +168,7 @@ mutation createTask {
   }
 }
 ```
-- if you got a `403` error, check you didn't forget the `auth` Header in your request (see previous chapter)
+- if you got a `401` error, check you didn't forget the `auth` Header in your request (see previous chapter)
 
 Congratulations !! You have created a user and a new jobs :) You can go to the kibana console and run 
 the search to see your creations.
